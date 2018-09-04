@@ -5,6 +5,7 @@ import android.app.Application;
 import android.support.v4.app.Fragment;
 
 
+import com.blankj.utilcode.util.Utils;
 import com.ldlywt.hello.dagger.component.DaggerAppComponent;
 
 import javax.inject.Inject;
@@ -37,6 +38,7 @@ public class App extends Application implements HasSupportFragmentInjector, HasA
     public void onCreate() {
         super.onCreate();
         mBaseApp = this;
+        Utils.init(this);
         DaggerAppComponent.create().inject(this);
     }
 
