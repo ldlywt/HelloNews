@@ -16,6 +16,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -41,5 +46,7 @@ dependencies {
     api 'com.blankj:utilcode:1.13.9'
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
     api 'com.just.agentweb:agentweb:4.0.2'
+    api 'com.youth.banner:banner:1.4.10'
+    api 'com.github.bumptech.glide:glide:4.4.0'
 
 }

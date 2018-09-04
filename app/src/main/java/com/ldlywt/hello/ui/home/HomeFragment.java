@@ -1,25 +1,26 @@
 package com.ldlywt.hello.ui.home;
 
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.just.agentweb.AgentWeb;
 import com.ldlywt.hello.R;
 import com.ldlywt.hello.adapter.CustomLoadMoreView;
 import com.ldlywt.hello.adapter.SpaceDecoration;
 import com.ldlywt.hello.base.BaseDaggerFragment;
 import com.ldlywt.hello.bean.ArticleListBean;
+import com.ldlywt.hello.bean.BannerBean;
 import com.ldlywt.hello.ui.WebActivity;
-import com.trello.rxlifecycle2.LifecycleTransformer;
+import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -40,6 +41,8 @@ public class HomeFragment extends BaseDaggerFragment<HomePresenter> implements H
 
     private int mPage;
     private ArticleAdapter mAdapter;
+    private List<String> mBannerBeans = new ArrayList<>();
+    private Banner mBanner;
 
     public static HomeFragment newInstance(String from) {
         HomeFragment fragment = new HomeFragment();
@@ -53,30 +56,32 @@ public class HomeFragment extends BaseDaggerFragment<HomePresenter> implements H
     protected void initData() {
         if (mPresenter != null) {
             mPresenter.getArticles(mPage);
+            mPresenter.getBanner();
         }
     }
 
     @Override
     protected void initView() {
         mRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecycleView.addItemDecoration(new SpaceDecoration(10));
+        SpaceDecoration itemDecoration = new SpaceDecoration(10);
+//        itemDecoration.setPaddingEdgeSide(true);//是否为左右2边添加padding.默认true.
+//        itemDecoration.setPaddingStart(true);//是否在给第一行的item添加上padding(不包含header).默认true.
+//        itemDecoration.setPaddingHeaderFooter(false);//是否对Header于Footer有效,默认false.
+        mRecycleView.addItemDecoration(itemDecoration);
         mAdapter = new ArticleAdapter();
-        mRecycleView.setAdapter(mAdapter);
         mAdapter.setLoadMoreView(new CustomLoadMoreView());
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                mPresenter.getArticles(++mPage);
-            }
-        }, mRecycleView);
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                WebActivity.startWebActivity(getActivity(),
-                        mAdapter.getData().get(position).getLink(),
-                        mAdapter.getData().get(position).getTitle());
-            }
-        });
+        mAdapter.setOnLoadMoreListener(() -> mPresenter.getArticles(++mPage), mRecycleView);
+        mAdapter.setOnItemClickListener((adapter, view, position) -> WebActivity.startWebActivity(getActivity(),
+                mAdapter.getData().get(position).getLink()));
+        View headerView = getHeaderView();
+        mAdapter.addHeaderView(headerView);
+        mRecycleView.setAdapter(mAdapter);
+    }
+
+    private View getHeaderView() {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.home_banner, null);
+        mBanner = view.findViewById(R.id.banner);
+        return view;
     }
 
     @Override
@@ -88,6 +93,24 @@ public class HomeFragment extends BaseDaggerFragment<HomePresenter> implements H
     public void updateArticleView(List<ArticleListBean.DatasBean> datas) {
         mAdapter.loadMoreComplete();
         mAdapter.addData(datas);
+    }
+
+    @Override
+    public void updateBannerView(List<BannerBean> bannerBeans) {
+        mBannerBeans.clear();
+        for (BannerBean bean : bannerBeans) {
+            mBannerBeans.add(bean.getImagePath());
+        }
+        mBanner.setImages(mBannerBeans)
+                .setImageLoader(new GlideImageLoader())
+                .setOnBannerListener(new OnBannerListener() {
+                    @Override
+                    public void OnBannerClick(int position) {
+                        WebActivity.startWebActivity(getActivity(),
+                                bannerBeans.get(position).getUrl());
+                    }
+                })
+                .start();
     }
 
     private class ArticleAdapter extends BaseQuickAdapter<ArticleListBean.DatasBean, BaseViewHolder> {

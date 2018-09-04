@@ -22,16 +22,13 @@ public class WebActivity extends BaseActivity {
     FrameLayout flWeb;
 
     private static final String WEB_URL = "web_url";
-    private static final String TITLE = "TITLE";
     private String mWebUrl;
 
     AgentWeb mAgentWeb;
-    private String mTitle;
 
-    public static void startWebActivity(Context context, String url,String title) {
+    public static void startWebActivity(Context context, String url) {
         Intent intent = new Intent(context, WebActivity.class);
         intent.putExtra(WEB_URL, url);
-        intent.putExtra(TITLE, title);
         context.startActivity(intent);
     }
 

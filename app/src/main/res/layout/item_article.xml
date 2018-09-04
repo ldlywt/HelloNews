@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/iv"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:src="@mipmap/icon_heart_normal" />
 
@@ -28,33 +28,33 @@
         tools:text="详解Android数据存储技术" />
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tv_title"
         android:layout_below="@+id/tv_title"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tv_author"
             android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:lines="1"
-            android:layout_height="wrap_content"
             tools:text="达叔小生" />
 
         <TextView
             android:id="@+id/tv_chapterName"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             tools:text="app缓存相关" />
 
         <TextView
             android:id="@+id/tv_niceDate"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             tools:text="2018-08-28" />
     </LinearLayout>
 </RelativeLayout>

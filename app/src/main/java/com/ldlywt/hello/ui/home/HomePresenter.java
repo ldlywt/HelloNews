@@ -2,11 +2,15 @@ package com.ldlywt.hello.ui.home;
 
 import com.ldlywt.hello.base.BasePresenter;
 import com.ldlywt.hello.bean.ArticleListBean;
+import com.ldlywt.hello.bean.BannerBean;
 import com.ldlywt.hello.bean.BaseResult;
 import com.zhouyou.http.EasyHttp;
 import com.zhouyou.http.callback.CallBackProxy;
 import com.zhouyou.http.callback.SimpleCallBack;
 import com.zhouyou.http.exception.ApiException;
+import com.zhouyou.http.model.ApiResult;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -38,6 +42,24 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                     @Override
                     public void onSuccess(ArticleListBean articleListBean) {
                         mView.updateArticleView(articleListBean.getDatas());
+                    }
+                }) {
+                });
+    }
+
+    @Override
+    public void getBanner() {
+        EasyHttp
+                .get("/banner/json")
+                .execute(new CallBackProxy<BaseResult<List<BannerBean>>, List<BannerBean>>(new SimpleCallBack<List<BannerBean>>() {
+                    @Override
+                    public void onError(ApiException e) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(List<BannerBean> bannerBeans) {
+                        mView.updateBannerView(bannerBeans);
                     }
                 }) {
                 });
