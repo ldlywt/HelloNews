@@ -20,7 +20,7 @@ public abstract class BaseFragment extends RxFragment implements BaseContract.Ba
 
     protected abstract int getLayoutId();
 
-    protected abstract void initView(View view);
+    protected abstract void initView();
 
     protected abstract void initData();
 
@@ -30,13 +30,13 @@ public abstract class BaseFragment extends RxFragment implements BaseContract.Ba
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         inflaterView(inflater, container);
         unbinder = ButterKnife.bind(this, mRootView);
-        initView(mRootView);
         return mRootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initView();
         initData();
     }
 

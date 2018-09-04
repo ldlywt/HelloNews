@@ -1,6 +1,7 @@
 package com.ldlywt.hello.ui.maintab;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.ldlywt.hello.R;
@@ -32,8 +33,8 @@ public class DiscoveryFragment extends BaseFragment {
     }
 
     @Override
-    protected void initView(View view) {
-
+    protected void initView() {
+        getView().setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorAccent));
     }
 
     @Override

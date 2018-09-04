@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ldlywt.hello.R;
+import com.ldlywt.hello.ui.home.HomeFragment;
 
 /**
  * <pre>

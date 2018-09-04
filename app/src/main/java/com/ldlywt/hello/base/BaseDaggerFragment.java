@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.ldlywt.hello.App;
+import com.trello.rxlifecycle2.LifecycleTransformer;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import javax.inject.Inject;
@@ -67,13 +68,13 @@ public abstract class BaseDaggerFragment<T extends BaseContract.BasePresenter> e
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         inflaterView(inflater, container);
         unbinder = ButterKnife.bind(this, mRootView);
-        initView(mRootView);
         return mRootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initView();
         initData();
     }
 
@@ -91,7 +92,7 @@ public abstract class BaseDaggerFragment<T extends BaseContract.BasePresenter> e
         }
     }
 
-    protected abstract void initView(View view);
+    protected abstract void initView();
 
     protected abstract int getLayoutId();
 
@@ -123,4 +124,8 @@ public abstract class BaseDaggerFragment<T extends BaseContract.BasePresenter> e
     public void onRetry() {
     }
 
+    @Override
+    public <T> LifecycleTransformer<T> bindToLife() {
+        return this.bindToLifecycle();
+    }
 }

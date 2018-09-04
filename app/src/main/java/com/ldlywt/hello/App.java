@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 
 import com.blankj.utilcode.util.Utils;
 import com.ldlywt.hello.dagger.component.DaggerAppComponent;
+import com.zhouyou.http.EasyHttp;
 
 import javax.inject.Inject;
 
@@ -27,12 +28,15 @@ import dagger.android.support.HasSupportFragmentInjector;
  */
 public class App extends Application implements HasSupportFragmentInjector, HasActivityInjector {
 
+    private static App mBaseApp;
     @Inject
     DispatchingAndroidInjector<Activity> mDispatchingAndroidInjector;
     @Inject
     DispatchingAndroidInjector<Fragment> mFragmentDispatchingAndroidInjector;
 
-    private static App mBaseApp;
+    public static App getInstance() {
+        return mBaseApp;
+    }
 
     @Override
     public void onCreate() {
@@ -40,10 +44,15 @@ public class App extends Application implements HasSupportFragmentInjector, HasA
         mBaseApp = this;
         Utils.init(this);
         DaggerAppComponent.create().inject(this);
+        initHttp();
     }
 
-    public static App getInstance(){
-        return mBaseApp;
+    private void initHttp() {
+        EasyHttp.init(this);
+        EasyHttp
+                .getInstance()
+                .setBaseUrl("http://www.wanandroid.com")
+                .debug("EasyHttp", true);
     }
 
     @Override

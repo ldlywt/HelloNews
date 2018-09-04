@@ -1,7 +1,11 @@
 package com.ldlywt.hello.dagger.module;
 
+import com.ldlywt.hello.dagger.scope.PerFragment;
+import com.ldlywt.hello.ui.home.HomeFragment;
+
 import dagger.Module;
 import dagger.Provides;
+import dagger.android.ContributesAndroidInjector;
 
 /**
  * <pre>
@@ -13,9 +17,12 @@ import dagger.Provides;
  * </pre>
  */
 @Module
-public class AllFragmentsModule {
-//    @Provides
-//    static TopicAdapter provideTopicAdapter(TopicFragment topicFragment) {
-//        return new TopicAdapter(topicFragment.getActivity());
-//    }
+public  abstract class AllFragmentsModule {
+//    @PerFragment
+//    @ContributesAndroidInjector(modules = TopicFragmentModule.class)
+//    abstract TopicFragment contributeTopicFragmentInjector();
+
+    @PerFragment
+    @ContributesAndroidInjector()
+    abstract HomeFragment contributeHomeFragmentInjector();
 }

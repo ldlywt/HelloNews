@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.FragmentUtils;
 import com.ldlywt.hello.base.BaseActivity;
 import com.ldlywt.hello.ui.maintab.MainTabData;
 
@@ -18,6 +19,7 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.bottom_tab)
     android.support.design.widget.TabLayout mTabLayout;
     private Fragment[] mFragments;
+    private int curIndex;
 
     @Override
     protected int getLayoutId() {
@@ -35,11 +37,12 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initData() {
         mFragments = MainTabData.getFragments("main");
+        FragmentUtils.add(getSupportFragmentManager(), mFragments, R.id.fl_container, curIndex);
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                onTabItemSelected(tab.getPosition());
+                showCurrentFragment(tab.getPosition());
                 // Tab 选中之后，改变各个Tab的状态
                 for (int i = 0; i < mTabLayout.getTabCount(); i++) {
                     View view = mTabLayout.getTabAt(i).getCustomView();
@@ -71,25 +74,8 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private void onTabItemSelected(int position) {
-        Fragment fragment = null;
-        switch (position) {
-            case 0:
-                fragment = mFragments[0];
-                break;
-            case 1:
-                fragment = mFragments[1];
-                break;
-            case 2:
-                fragment = mFragments[2];
-                break;
-            case 3:
-                fragment = mFragments[3];
-                break;
-        }
-        if (fragment != null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fl_container, fragment).commit();
-        }
+    private void showCurrentFragment(int index) {
+        FragmentUtils.showHide(curIndex = index, mFragments);
     }
 
 }
