@@ -2,6 +2,7 @@ package com.ldlywt.hello;
 
 import android.app.Activity;
 import android.app.Application;
+import android.provider.SyncStateContract;
 import android.support.v4.app.Fragment;
 
 
@@ -51,7 +52,7 @@ public class App extends Application implements HasSupportFragmentInjector, HasA
         EasyHttp.init(this);
         EasyHttp
                 .getInstance()
-                .setBaseUrl("http://www.wanandroid.com")
+                .setBaseUrl(Constant.WAN_ANDROID_HOST_URL)
                 .debug("EasyHttp", true);
     }
 

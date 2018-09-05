@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.ldlywt.hello.R;
 import com.ldlywt.hello.ui.home.HomeFragment;
+import com.ldlywt.hello.ui.mine.MineFragment;
 
 /**
  * <pre>
@@ -30,7 +31,7 @@ public class MainTabData {
         fragments[0] = HomeFragment.newInstance(from);
         fragments[1] = DiscoveryFragment.newInstance(from);
         fragments[2] = AttentionFragment.newInstance(from);
-        fragments[3] = ProfileFragment.newInstance(from);
+        fragments[3] = MineFragment.newInstance(from);
         return fragments;
     }
 

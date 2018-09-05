@@ -1,5 +1,6 @@
 package com.ldlywt.hello.ui.home;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.ldlywt.hello.base.BasePresenter;
 import com.ldlywt.hello.bean.ArticleListBean;
 import com.ldlywt.hello.bean.BannerBean;
@@ -36,7 +37,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                 .execute(new CallBackProxy<BaseResult<ArticleListBean>, ArticleListBean>(new SimpleCallBack<ArticleListBean>() {
                     @Override
                     public void onError(ApiException e) {
-                        e.printStackTrace();
+                        ToastUtils.showShort(e.getMessage());
                     }
 
                     @Override
@@ -54,7 +55,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                 .execute(new CallBackProxy<BaseResult<List<BannerBean>>, List<BannerBean>>(new SimpleCallBack<List<BannerBean>>() {
                     @Override
                     public void onError(ApiException e) {
-
+                        ToastUtils.showShort(e.getMessage());
                     }
 
                     @Override

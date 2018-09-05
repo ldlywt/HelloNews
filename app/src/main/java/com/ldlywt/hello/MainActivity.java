@@ -29,12 +29,17 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        getTitleBar()
-                .setCenterTextString("资讯")
-                .setCenterTextSize(SizeUtils.dp2px(16))
-                .setLeftDrawableLeft(null)
-                .setCenterTextColor(R.color.white)
-                .setBackColor(R.color.colorPrimary);
+//        getTitleBar()
+//                .setCenterTextString("资讯")
+//                .setCenterTextSize(SizeUtils.dp2px(16))
+//                .setLeftDrawableLeft(null)
+//                .setCenterTextColor(R.color.white)
+//                .setBackColor(R.color.colorPrimary);
+    }
+
+    @Override
+    protected void initTitle() {
+
     }
 
     @Override

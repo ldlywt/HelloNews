@@ -2,6 +2,7 @@ package com.ldlywt.hello.dagger.module;
 
 import com.ldlywt.hello.dagger.scope.PerFragment;
 import com.ldlywt.hello.ui.home.HomeFragment;
+import com.ldlywt.hello.ui.mine.MineFragment;
 
 import dagger.Module;
 import dagger.Provides;
@@ -25,4 +26,8 @@ public  abstract class AllFragmentsModule {
     @PerFragment
     @ContributesAndroidInjector()
     abstract HomeFragment contributeHomeFragmentInjector();
+
+    @PerFragment
+    @ContributesAndroidInjector()
+    abstract MineFragment contributeMineFragmentInjector();
 }
