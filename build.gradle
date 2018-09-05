@@ -53,6 +53,7 @@ ext {
                     constraint_layout: 'com.android.support.constraint:constraint-layout:1.0.2',
                     recyclerview: 'com.android.support:recyclerview-v7:27.1.1',
                     design: 'com.android.support:design:27.1.1',
+                    cardview: 'com.android.support:cardview-v7:27.1.1',
 
                     // ReactiveX
                     rxjava2: 'io.reactivex.rxjava2:rxjava:2.1.7',

@@ -40,21 +40,31 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:ellipsize="end"
             android:lines="1"
+            android:textSize="12sp"
             tools:text="达叔小生" />
 
         <TextView
             android:id="@+id/tv_chapterName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textSize="12sp"
             tools:text="app缓存相关" />
 
         <TextView
             android:id="@+id/tv_niceDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
+            android:ellipsize="end"
+            android:lines="1"
+            android:textSize="12sp"
             tools:text="2018-08-28" />
     </LinearLayout>
 </RelativeLayout>

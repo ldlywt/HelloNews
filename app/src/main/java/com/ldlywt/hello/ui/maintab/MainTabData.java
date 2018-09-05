@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.ldlywt.hello.R;
 import com.ldlywt.hello.ui.home.HomeFragment;
 import com.ldlywt.hello.ui.mine.MineFragment;
+import com.ldlywt.hello.ui.tree.TreeFragment;
 
 /**
  * <pre>
@@ -24,12 +25,12 @@ public class MainTabData {
 
     public static final int[] tabResNormal = new int[]{R.drawable.tab_home_selector, R.drawable.tab_discovery_selector, R.drawable.tab_attention_selector, R.drawable.tab_profile_selector};
     public static final int[] tabResPressed = new int[]{R.mipmap.ic_tab_strip_icon_feed_selected, R.mipmap.ic_tab_strip_icon_category_selected, R.mipmap.ic_tab_strip_icon_pgc_selected, R.mipmap.ic_tab_strip_icon_profile_selected};
-    private static final String[] tabTitle = new String[]{"首页", "发现", "关注", "我的"};
+    private static final String[] tabTitle = new String[]{"首页", "体系", "关注", "我的"};
 
     public static Fragment[] getFragments(String from){
         Fragment[] fragments = new Fragment[4];
         fragments[0] = HomeFragment.newInstance(from);
-        fragments[1] = DiscoveryFragment.newInstance(from);
+        fragments[1] = TreeFragment.newInstance(from);
         fragments[2] = AttentionFragment.newInstance(from);
         fragments[3] = MineFragment.newInstance(from);
         return fragments;

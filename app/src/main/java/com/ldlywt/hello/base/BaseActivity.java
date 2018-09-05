@@ -1,5 +1,6 @@
 package com.ldlywt.hello.base;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -29,6 +30,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseCo
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         int layoutId = getLayoutId();
         setContentView(layoutId);
         unbinder = ButterKnife.bind(this);

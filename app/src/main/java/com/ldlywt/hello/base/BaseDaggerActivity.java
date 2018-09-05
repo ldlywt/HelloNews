@@ -1,5 +1,6 @@
 package com.ldlywt.hello.base;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.widget.Toast;
@@ -34,6 +35,7 @@ public abstract class BaseDaggerActivity<T extends BaseContract.BasePresenter> e
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         int layoutId = getLayoutId();
         setContentView(layoutId);
         unbinder = ButterKnife.bind(this);
