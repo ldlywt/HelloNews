@@ -2,10 +2,12 @@ package com.ldlywt.hello.ui.home;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -17,13 +19,25 @@ import com.ldlywt.hello.base.BaseDaggerFragment;
 import com.ldlywt.hello.bean.ArticleListBean;
 import com.ldlywt.hello.bean.BannerBean;
 import com.ldlywt.hello.ui.WebActivity;
+import com.scwang.smartrefresh.header.DeliveryHeader;
+import com.scwang.smartrefresh.header.WaveSwipeHeader;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.footer.FalsifyFooter;
+import com.scwang.smartrefresh.layout.header.BezierRadarHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
-import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * <pre>
@@ -34,10 +48,13 @@ import butterknife.BindView;
  *     version: 1.0
  * </pre>
  */
-public class HomeFragment extends BaseDaggerFragment<HomePresenter> implements HomeContract.View {
+public class HomeFragment extends BaseDaggerFragment<HomePresenter> implements HomeContract.View, OnRefreshListener, OnLoadMoreListener {
 
     @BindView(R.id.recycleView)
     RecyclerView mRecycleView;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout mRefreshLayout;
+    Unbinder unbinder;
 
     private int mPage;
     private ArticleAdapter mAdapter;
@@ -55,6 +72,7 @@ public class HomeFragment extends BaseDaggerFragment<HomePresenter> implements H
     @Override
     protected void initData() {
         if (mPresenter != null) {
+            showLoading();
             mPresenter.getArticles(mPage);
             mPresenter.getBanner();
         }
@@ -69,13 +87,16 @@ public class HomeFragment extends BaseDaggerFragment<HomePresenter> implements H
 //        itemDecoration.setPaddingHeaderFooter(false);//是否对Header于Footer有效,默认false.
         mRecycleView.addItemDecoration(itemDecoration);
         mAdapter = new ArticleAdapter();
-        mAdapter.setLoadMoreView(new CustomLoadMoreView());
-        mAdapter.setOnLoadMoreListener(() -> mPresenter.getArticles(++mPage), mRecycleView);
+//        mAdapter.setLoadMoreView(new CustomLoadMoreView());
+//        mAdapter.setOnLoadMoreListener(() -> mPresenter.getArticles(++mPage), mRecycleView);
         mAdapter.setOnItemClickListener((adapter, view, position) -> WebActivity.startWebActivity(getActivity(),
                 mAdapter.getData().get(position).getLink()));
         View headerView = getHeaderView();
         mAdapter.addHeaderView(headerView);
         mRecycleView.setAdapter(mAdapter);
+        mRefreshLayout.setOnRefreshListener(this);
+        mRefreshLayout.setOnLoadMoreListener(this);
+        mRefreshLayout.setRefreshHeader(new DeliveryHeader(getActivity()));
     }
 
     private View getHeaderView() {
@@ -90,9 +111,17 @@ public class HomeFragment extends BaseDaggerFragment<HomePresenter> implements H
     }
 
     @Override
-    public void updateArticleView(List<ArticleListBean.DatasBean> datas) {
-        mAdapter.loadMoreComplete();
-        mAdapter.addData(datas);
+    public void updateArticleView(ArticleListBean articleListBean) {
+        hideLoading();
+        if (articleListBean.getCurPage() == 1) {
+            //第一次加载，或者下拉刷新出现的 新的数据
+            mRefreshLayout.finishRefresh();
+            mAdapter.setNewData(articleListBean.getDatas());
+        } else {
+            mRefreshLayout.finishLoadMore();
+            mAdapter.addData(articleListBean.getDatas());
+        }
+//        mAdapter.loadMoreComplete();
     }
 
     @Override
@@ -103,14 +132,19 @@ public class HomeFragment extends BaseDaggerFragment<HomePresenter> implements H
         }
         mBanner.setImages(mBannerBeans)
                 .setImageLoader(new GlideImageLoader())
-                .setOnBannerListener(new OnBannerListener() {
-                    @Override
-                    public void OnBannerClick(int position) {
-                        WebActivity.startWebActivity(getActivity(),
-                                bannerBeans.get(position).getUrl());
-                    }
-                })
+                .setOnBannerListener(position -> WebActivity.startWebActivity(getActivity(),
+                        bannerBeans.get(position).getUrl()))
                 .start();
+    }
+
+    @Override
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        mPresenter.getArticles(mPage = 0);
+    }
+
+    @Override
+    public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+        mPresenter.getArticles(++mPage);
     }
 
     private class ArticleAdapter extends BaseQuickAdapter<ArticleListBean.DatasBean, BaseViewHolder> {

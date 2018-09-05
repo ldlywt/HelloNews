@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_4"
             android:text="@string/brvah_loading"
-            android:textColor="#0dddb8"
+            android:textColor="#aaa"
             android:textSize="@dimen/sp_14" />
     </LinearLayout>
 

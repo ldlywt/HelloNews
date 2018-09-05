@@ -18,7 +18,7 @@ import java.util.List;
 public class HomeContract {
 
     interface View extends BaseContract.BaseView {
-        void updateArticleView(List<ArticleListBean.DatasBean> datas);
+        void updateArticleView(ArticleListBean articleListBean);
         void updateBannerView(List<BannerBean> bannerBeans);
     }
 

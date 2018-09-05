@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.FragmentUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.ldlywt.hello.base.BaseActivity;
 import com.ldlywt.hello.ui.maintab.MainTabData;
 
@@ -30,6 +31,8 @@ public class MainActivity extends BaseActivity {
     protected void initView() {
         getTitleBar()
                 .setCenterTextString("资讯")
+                .setCenterTextSize(SizeUtils.dp2px(16))
+                .setLeftDrawableLeft(null)
                 .setCenterTextColor(R.color.white)
                 .setBackColor(R.color.colorPrimary);
     }

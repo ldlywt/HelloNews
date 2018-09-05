@@ -41,7 +41,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
 
                     @Override
                     public void onSuccess(ArticleListBean articleListBean) {
-                        mView.updateArticleView(articleListBean.getDatas());
+                        mView.updateArticleView(articleListBean);
                     }
                 }) {
                 });

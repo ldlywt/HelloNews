@@ -1,11 +1,18 @@
 package com.ldlywt.hello.base;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.ldlywt.hello.App;
@@ -25,6 +32,7 @@ public abstract class BaseDaggerFragment<T extends BaseContract.BasePresenter> e
 
     private Unbinder unbinder;
     private View mRootView, mErrorView, mEmptyView;
+    private ProgressDialog mProgressDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,6 +76,9 @@ public abstract class BaseDaggerFragment<T extends BaseContract.BasePresenter> e
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         inflaterView(inflater, container);
         unbinder = ButterKnife.bind(this, mRootView);
+        mProgressDialog = new ProgressDialog(getActivity());
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setMessage(getResources().getString(com.chad.library.R.string.loading));
         return mRootView;
     }
 
@@ -98,12 +109,12 @@ public abstract class BaseDaggerFragment<T extends BaseContract.BasePresenter> e
 
     @Override
     public void showLoading() {
-        Toast.makeText(App.getInstance(), "显示进度条", Toast.LENGTH_SHORT).show();
+        mProgressDialog.show();
     }
 
     @Override
     public void hideLoading() {
-        Toast.makeText(App.getInstance(), "隐藏进度条", Toast.LENGTH_SHORT).show();
+        mProgressDialog.dismiss();
     }
 
     @Override
