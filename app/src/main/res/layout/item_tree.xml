@@ -26,7 +26,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="15dp"
                 android:src="@mipmap/pic_android" />
 
             <TextView
@@ -36,12 +36,13 @@
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
                 android:textColor="@color/colorAccent"
-                android:textSize="28sp"
+                android:textSize="30sp"
                 android:typeface="sans"
                 tools:text="DeliveryDeliveryDelivery" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"

@@ -65,7 +65,9 @@ public class HorizontalPagerAdapter extends PagerAdapter {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                TreeChildrenActivity.startTreeChildrenActivity(mContext, treeBean.getChildren().get(position).getId(), treeBean.getName());
+                TreeChildrenActivity.startTreeChildrenActivity(mContext,
+                        treeBean.getChildren().get(position).getId(),
+                        treeBean.getChildren().get(position).getName());
             }
         });
         container.addView(view);
