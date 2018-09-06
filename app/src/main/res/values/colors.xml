@@ -7,4 +7,14 @@
     <!-- 白色 -->
     <color name="white">#FFF</color>
     <color name="common_pressed">#20000000</color>  <!--白色背景按下去的颜色-->
+
+
+    <color name="color_33">#333333</color>        //【文字 黑色】- 标题，重要信息文字
+    <color name="color_66">#666666</color>        //【文字 中灰】- 正文，默认状态文字
+    <color name="b3">#999999</color>        //【文字 灰色】- 提示性文字，次要信息文字
+    <color name="b4">#afb0b0</color>        //【失效，不可点击状态】
+    <color name="color_line">#dedede</color>        //【分割线】 - 1px分割线，
+    <color name="b6">#f0f0f0</color>        //【背景 浅灰】 - 底层，无内容背景，搜索条，对话框，二级底部栏
+    <color name="b7">#ffffff</color>        //【背景 纯白】 - 内页背景，顶部底部栏
+
 </resources>

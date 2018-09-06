@@ -48,6 +48,8 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseCo
                 .setLeftDrawableLeft(ContextCompat.getDrawable(this, R.drawable.ic_back_white))
                 .setWidthAndHeight(LinearLayout.LayoutParams.MATCH_PARENT, SizeUtils.dp2px(40))
 //                .setLeftTextString(getResources().getString(R.string.back))
+                .setCenterTextSize(18)
+                .setCenterTextColor(R.color.white)
                 .setLeftTextColor(android.R.color.white)
                 .setBottomLineVisible(View.GONE)
                 .setLeftViewIsClickable(true)

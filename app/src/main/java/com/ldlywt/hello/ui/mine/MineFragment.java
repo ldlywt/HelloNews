@@ -22,6 +22,7 @@ import com.ldlywt.hello.adapter.SpaceDecoration;
 import com.ldlywt.hello.base.BaseDaggerFragment;
 import com.ldlywt.hello.bean.SettingBean;
 import com.ldlywt.hello.bean.UserBean;
+import com.ldlywt.hello.ui.about.AboutActivity;
 
 import butterknife.BindView;
 
@@ -168,6 +169,9 @@ public class MineFragment extends BaseDaggerFragment<MinePresenter> implements M
                         .create()
                         .show();
 
+                break;
+            case 3:
+                AboutActivity.startAboutActivity(getActivity());
                 break;
         }
     }

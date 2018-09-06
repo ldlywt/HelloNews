@@ -66,7 +66,6 @@ public class ProjectFragment extends BaseDaggerFragment<ProjectPresenter> implem
 
     @Override
     protected void initData() {
-        showLoading();
         mPresenter.getProject(mPage);
     }
 
@@ -95,7 +94,6 @@ public class ProjectFragment extends BaseDaggerFragment<ProjectPresenter> implem
 
     @Override
     public void updateProjectView(ProjectBean bean) {
-        hideLoading();
         if (bean.getDatas().size() == 0) {
             ToastUtils.showShort("已经是最后一页了");
             mRefreshLayout.finishLoadMore();

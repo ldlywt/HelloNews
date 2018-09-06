@@ -66,9 +66,6 @@ public class TreeChildrenActivity extends BaseActivity implements OnRefreshListe
     protected void initView() {
         getTitleBar()
                 .setCenterTextString(getIntent().getStringExtra(TITLE))
-                .setCenterTextSize(18)
-                .setLeftDrawableLeft(null)
-                .setCenterTextColor(R.color.white)
                 .setBackColor(R.color.colorPrimary);
         mRecycleView.setLayoutManager(new LinearLayoutManager(this));
         SpaceDecoration itemDecoration = new SpaceDecoration(10);
