@@ -24,6 +24,8 @@ import com.ldlywt.hello.ui.WebActivity;
 import com.ldlywt.hello.ui.home.GlideImageLoader;
 import com.ldlywt.hello.ui.home.HomeFragment;
 import com.scwang.smartrefresh.header.DeliveryHeader;
+import com.scwang.smartrefresh.header.DropBoxHeader;
+import com.scwang.smartrefresh.header.PhoenixHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -64,6 +66,7 @@ public class ProjectFragment extends BaseDaggerFragment<ProjectPresenter> implem
 
     @Override
     protected void initData() {
+        showLoading();
         mPresenter.getProject(mPage);
     }
 
@@ -81,7 +84,8 @@ public class ProjectFragment extends BaseDaggerFragment<ProjectPresenter> implem
         mRecycleView.setAdapter(mAdapter);
         mRefreshLayout.setOnRefreshListener(this);
         mRefreshLayout.setOnLoadMoreListener(this);
-        mRefreshLayout.setRefreshHeader(new DeliveryHeader(getActivity()));
+        mRefreshLayout.setRefreshHeader(new PhoenixHeader(getActivity()));
+        mRefreshLayout.setPrimaryColorsId(R.color.colorPrimary, R.color.white);
     }
 
     @Override
@@ -91,7 +95,8 @@ public class ProjectFragment extends BaseDaggerFragment<ProjectPresenter> implem
 
     @Override
     public void updateProjectView(ProjectBean bean) {
-        if (bean.getDatas() == null || bean.getDatas().size() == 0) {
+        hideLoading();
+        if (bean.getDatas().size() == 0) {
             ToastUtils.showShort("已经是最后一页了");
             mRefreshLayout.finishLoadMore();
             return;
@@ -135,8 +140,8 @@ public class ProjectFragment extends BaseDaggerFragment<ProjectPresenter> implem
 
         @Override
         protected void convert(BaseViewHolder helper, ProjectBean.DatasBean item) {
-            helper.setText(R.id.tv_desc,item.getDesc());
-            helper.setText(R.id.tv_title,item.getTitle());
+            helper.setText(R.id.tv_desc, item.getDesc());
+            helper.setText(R.id.tv_title, item.getTitle());
             ViewGroup root = helper.getView(R.id.root);
             root.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (300 + Math.random() * 400)));
             Glide.with(getContext()).load(item.getEnvelopePic()).into((ImageView) helper.getView(R.id.img));

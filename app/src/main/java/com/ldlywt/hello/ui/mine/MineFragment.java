@@ -6,12 +6,12 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -22,11 +22,8 @@ import com.ldlywt.hello.adapter.SpaceDecoration;
 import com.ldlywt.hello.base.BaseDaggerFragment;
 import com.ldlywt.hello.bean.SettingBean;
 import com.ldlywt.hello.bean.UserBean;
-import com.ldlywt.xdialog.XDialog;
+
 import butterknife.BindView;
-
-
-import static com.chad.library.adapter.base.listener.SimpleClickListener.TAG;
 
 /**
  * <pre>
@@ -73,44 +70,39 @@ public class MineFragment extends BaseDaggerFragment<MinePresenter> implements M
         mAdapter = new MineAdapter();
         mRecycleView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(this);
-        mIvAvatar.setOnClickListener(v -> showLoginDialog());
+        mIvAvatar.setOnClickListener(v -> showLoginOrRegisterDialog(false));
     }
 
-    private void showLoginDialog() {
-        //弹窗隐藏时回调方法
-        //View控件点击事件回调
-        View dialog = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_login, null);
-        XDialog xDialog = new XDialog.Builder(getFragmentManager())
-                .setView(dialog)
-//                .setView(view)  //设置弹窗布局,直接传入View
-                .setWidth(600)  //设置弹窗宽度(px)
-//                .setHeight(800)  //设置弹窗高度(px)
-                .setScreenWidthAspect(getActivity(), 0.8f)   //设置弹窗宽度(参数aspect为屏幕宽度比例 0 - 1f)
-//                .setScreenHeightAspect(mActivity, 0.3f)  //设置弹窗高度(参数aspect为屏幕宽度比例 0 - 1f)
-                .setGravity(Gravity.CENTER)     //设置弹窗展示位置
-                .setTag(TAG)   //设置Tag
-                .setDimAmount(0.6f)     //设置弹窗背景透明度(0-1f)
-                .setCancelableOutside(true)     //弹窗在界面外是否可以点击取消
-                .setDialogAnimationRes(R.style.animate_dialog_scale) //设置弹窗动画)
-                .create()
-                .show();
-        EditText etPassword = dialog.findViewById(R.id.et_password);
-        EditText etUserName = dialog.findViewById(R.id.et_username);
-        dialog.findViewById(R.id.bt_submit).setOnClickListener(new View.OnClickListener() {
+    private void showLoginOrRegisterDialog(boolean register) {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_login, null);
+        EditText etPassword = view.findViewById(R.id.et_password);
+        EditText etUserName = view.findViewById(R.id.et_username);
+        EditText etRepassword = view.findViewById(R.id.et_repassword);
+        etRepassword.setVisibility(register ? View.VISIBLE : View.GONE);
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).setTitle(register ? "注册" : "登陆")
+                .setView(view)
+                .setPositiveButton("确定", null).setNegativeButton("取消", null).show();
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (TextUtils.isEmpty(etUserName.getText().toString().trim())) {
                     ToastUtils.showShort("请输入用户名");
-                    xDialog.dismiss();
                     return;
                 }
                 if (TextUtils.isEmpty(etPassword.getText().toString().trim())) {
                     ToastUtils.showShort("请输入密码");
-                    xDialog.dismiss();
                     return;
                 }
-                mPresenter.login(etUserName.getText().toString().trim(), etPassword.getText().toString().trim());
-                xDialog.dismiss();
+                if (etRepassword.getVisibility() == View.VISIBLE && TextUtils.isEmpty(etRepassword.getText().toString().trim())) {
+                    ToastUtils.showShort("请再次输入密码");
+                    return;
+                }
+                if (register) {
+                    mPresenter.register(etUserName.getText().toString().trim(), etPassword.getText().toString().trim(), etRepassword.getText().toString().trim());
+                } else {
+                    mPresenter.login(etUserName.getText().toString().trim(), etPassword.getText().toString().trim());
+                }
+                alertDialog.dismiss();
             }
         });
     }
@@ -157,10 +149,14 @@ public class MineFragment extends BaseDaggerFragment<MinePresenter> implements M
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         switch (position) {
             case 0:
-
+                if (TextUtils.isEmpty(SPUtils.getInstance().getString(Constant.SP_USER_NAME).trim())) {
+                    ToastUtils.showShort("请先登陆再说o(╯□╰)o");
+                    return;
+                }
+                ToastUtils.showShort("该功能正在实现中...");
                 break;
             case 1:
-
+                showLoginOrRegisterDialog(true);
                 break;
             case 2:
                 new AlertDialog

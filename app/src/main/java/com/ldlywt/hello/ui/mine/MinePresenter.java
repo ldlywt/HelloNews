@@ -75,9 +75,10 @@ public class MinePresenter extends BasePresenter<MineContract.View> implements M
                 .params("password", password)
                 .params("repassword", repassword)
                 .execute(new CallBackProxy<BaseResult<UserBean>, UserBean>(new SimpleCallBack<UserBean>() {
+
                     @Override
                     public void onError(ApiException e) {
-                        ToastUtils.showShort(e.getMessage());
+                        mView.updateRegisterView("注册失败！");
                     }
 
                     @Override

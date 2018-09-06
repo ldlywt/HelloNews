@@ -42,6 +42,7 @@ public class ProjectPresenter extends BasePresenter<ProjectContract.View> implem
                     @Override
                     public void onError(ApiException e) {
                         ToastUtils.showShort(e.getMessage());
+                        mView.updateProjectView(null);
                     }
 
                     @Override

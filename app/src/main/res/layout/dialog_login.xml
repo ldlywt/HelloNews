@@ -19,15 +19,11 @@
         android:layout_height="wrap_content"
         android:hint="请输入您的密码" />
 
-    <TextView
-        android:id="@+id/bt_submit"
-        android:layout_width="200dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/colorAccent"
-        android:gravity="center"
-        android:text="确定"
-        android:textColor="@color/white"
-        android:textSize="16sp" />
+    <EditText
+        android:id="@+id/et_repassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:hint="请再输入您的密码" />
 
 </LinearLayout>
