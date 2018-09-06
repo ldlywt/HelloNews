@@ -707,6 +707,11 @@ public class CommonTextView extends RelativeLayout {
         }
     }
 
+    public CommonTextView setBottomLineVisible(int visible){
+        bottomLineView.setVisibility(visible);
+        return this;
+    }
+
     /**
      * 初始化Params
      *

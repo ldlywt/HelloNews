@@ -7,12 +7,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.FragmentUtils;
-import com.blankj.utilcode.util.SizeUtils;
 import com.ldlywt.hello.base.BaseActivity;
-import com.ldlywt.hello.ui.maintab.MainTabData;
+import com.ldlywt.hello.ui.maintab.MainTabGenerateData;
 
 import butterknife.BindView;
-import io.reactivex.Observable;
 
 public class MainActivity extends BaseActivity {
 
@@ -44,7 +42,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        mFragments = MainTabData.getFragments("main");
+        mFragments = MainTabGenerateData.getFragments("main");
         FragmentUtils.add(getSupportFragmentManager(), mFragments, R.id.fl_container, curIndex);
         mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
 
@@ -57,10 +55,10 @@ public class MainActivity extends BaseActivity {
                     ImageView icon = (ImageView) view.findViewById(R.id.tab_content_image);
                     TextView text = (TextView) view.findViewById(R.id.tab_content_text);
                     if (i == tab.getPosition()) { // 选中状态
-                        icon.setImageResource(MainTabData.tabResPressed[i]);
+                        icon.setImageResource(MainTabGenerateData.tabResPressed[i]);
                         text.setTextColor(getResources().getColor(android.R.color.black));
                     } else {// 未选中状态
-                        icon.setImageResource(MainTabData.tabResNormal[i]);
+                        icon.setImageResource(MainTabGenerateData.tabResNormal[i]);
                         text.setTextColor(getResources().getColor(android.R.color.darker_gray));
                     }
                 }
@@ -78,7 +76,7 @@ public class MainActivity extends BaseActivity {
         });
         // 提供自定义的布局添加Tab
         for (int i = 0; i < 4; i++) {
-            mTabLayout.addTab(mTabLayout.newTab().setCustomView(MainTabData.getTabView(this, i)));
+            mTabLayout.addTab(mTabLayout.newTab().setCustomView(MainTabGenerateData.getTabView(this, i)));
         }
     }
 

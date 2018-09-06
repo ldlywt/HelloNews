@@ -4,6 +4,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.LinearLayout;
@@ -48,6 +49,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseCo
                 .setWidthAndHeight(LinearLayout.LayoutParams.MATCH_PARENT, SizeUtils.dp2px(40))
 //                .setLeftTextString(getResources().getString(R.string.back))
                 .setLeftTextColor(android.R.color.white)
+                .setBottomLineVisible(View.GONE)
                 .setLeftViewIsClickable(true)
                 .setOnCommonTextViewClickListener(new CommonTextView.OnCommonTextViewClickListener() {
                     @Override

@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#1E82D0</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorBlue">#33aaff</color>
 
     <!-- 白色 -->
     <color name="white">#FFF</color>
