@@ -1,6 +1,7 @@
 # Hello Android
 - 使用 Mvp + Dagger2 框架
 - 根据鸿洋大神提供的 wanandroid 开放Api 制作
+- Base 框架可以作为快速开发框架使用
 
 ### Apk 下载地址
 ![apk](https://github.com/ldlywt/HelloNews/raw/master/images/apk.png)
@@ -11,13 +12,11 @@
 
 ![gift](https://github.com/ldlywt/HelloNews/raw/master/images/demo.gif)
 
+|页面12|页面34|
+|:-:|:-:|
+|![](https://github.com/ldlywt/HelloNews/raw/master/images/1.png)|![](https://github.com/ldlywt/HelloNews/raw/master/images/2.png)
+|![](https://github.com/ldlywt/HelloNews/raw/master/images/3.png)|![](https://github.com/ldlywt/HelloNews/raw/master/images/4.png)
 
-![image1](https://github.com/ldlywt/HelloNews/raw/master/images/1.png)
-![image2](https://github.com/ldlywt/HelloNews/raw/master/images/2.png)
-
-
-![image3](https://github.com/ldlywt/HelloNews/raw/master/images/3.png)
-![image4](https://github.com/ldlywt/HelloNews/raw/master/images/4.png)
 
 ### Dependencies
 - com.jakewharton:butterknife:8.8.1
