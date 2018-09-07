@@ -4,15 +4,17 @@
 
 ### Apk 下载地址
 ![apk](https://github.com/ldlywt/HelloNews/raw/master/images/apk.png)
-Or
+
 > [链接](https://github.com/ldlywt/HelloNews/blob/master/app/release/app-release.apk)
 
 ### 项目预览
 
 ![gift](https://github.com/ldlywt/HelloNews/raw/master/images/demo.gif)
 
+
 ![image1](https://github.com/ldlywt/HelloNews/raw/master/images/1.png)
 ![image2](https://github.com/ldlywt/HelloNews/raw/master/images/2.png)
+
 
 ![image3](https://github.com/ldlywt/HelloNews/raw/master/images/3.png)
 ![image4](https://github.com/ldlywt/HelloNews/raw/master/images/4.png)
