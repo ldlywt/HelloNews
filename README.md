@@ -12,6 +12,10 @@
 
 ![gift](https://github.com/ldlywt/HelloNews/raw/master/images/demo.gif)
 
+---
+
+### 主界面预览图
+
 |页面12|页面34|
 |:-:|:-:|
 |![](https://github.com/ldlywt/HelloNews/raw/master/images/1.png)|![](https://github.com/ldlywt/HelloNews/raw/master/images/2.png)
