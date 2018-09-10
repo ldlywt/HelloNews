@@ -16,6 +16,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.Disposable;
+
 
 /**
  * <pre>
@@ -28,6 +30,8 @@ import javax.inject.Inject;
  */
 public class ProjectPresenter extends BasePresenter<ProjectContract.View> implements ProjectContract.Presenter {
 
+    private Disposable mDisposable;
+
     @Inject
     ProjectPresenter() {
     }
@@ -35,7 +39,7 @@ public class ProjectPresenter extends BasePresenter<ProjectContract.View> implem
 
     @Override
     public void getProject(int page) {
-        EasyHttp
+        mDisposable = EasyHttp
                 .get("/article/list/" + page + "/json")
                 .params("cid", String.valueOf(294))
                 .execute(new CallBackProxy<BaseResult<ProjectBean>, ProjectBean>(new SimpleCallBack<ProjectBean>() {
@@ -51,5 +55,11 @@ public class ProjectPresenter extends BasePresenter<ProjectContract.View> implem
                     }
                 }) {
                 });
+    }
+
+    @Override
+    public void detachView() {
+        super.detachView();
+        EasyHttp.cancelSubscription(mDisposable);
     }
 }

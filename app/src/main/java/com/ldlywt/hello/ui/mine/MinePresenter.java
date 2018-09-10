@@ -12,6 +12,8 @@ import com.zhouyou.http.exception.ApiException;
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.Disposable;
+
 
 /**
  * <pre>
@@ -23,6 +25,9 @@ import javax.inject.Inject;
  * </pre>
  */
 public class MinePresenter extends BasePresenter<MineContract.View> implements MineContract.Presenter {
+
+    private Disposable mDisposable;
+    private Disposable mDisposable1;
 
     @Inject
     MinePresenter() {
@@ -50,7 +55,7 @@ public class MinePresenter extends BasePresenter<MineContract.View> implements M
 
     @Override
     public void logout() {
-        EasyHttp
+        mDisposable1 = EasyHttp
                 .get("/user/logout/json")
                 .execute(new SimpleCallBack<Object>() {
 
@@ -69,7 +74,7 @@ public class MinePresenter extends BasePresenter<MineContract.View> implements M
 
     @Override
     public void register(String username, String password, String repassword) {
-        EasyHttp
+        mDisposable = EasyHttp
                 .post("/user/register")
                 .params("username", username)
                 .params("password", password)
@@ -91,5 +96,12 @@ public class MinePresenter extends BasePresenter<MineContract.View> implements M
                     }
                 }) {
                 });
+    }
+
+    @Override
+    public void detachView() {
+        super.detachView();
+        EasyHttp.cancelSubscription(mDisposable);
+        EasyHttp.cancelSubscription(mDisposable1);
     }
 }

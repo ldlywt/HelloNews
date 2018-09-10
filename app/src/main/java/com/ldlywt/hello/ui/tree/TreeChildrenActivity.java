@@ -37,6 +37,7 @@ import com.zhouyou.http.exception.ApiException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.disposables.Disposable;
 
 public class TreeChildrenActivity extends BaseActivity implements OnRefreshListener, OnLoadMoreListener {
 
@@ -49,6 +50,7 @@ public class TreeChildrenActivity extends BaseActivity implements OnRefreshListe
     private int mPage;
     private TreeChildrenAdapter mAdapter;
     private int mId;
+    private Disposable mDisposable;
 
     public static void startTreeChildrenActivity(Context context, int id, String name) {
         Intent intent = new Intent(context, TreeChildrenActivity.class);
@@ -82,7 +84,7 @@ public class TreeChildrenActivity extends BaseActivity implements OnRefreshListe
         mRefreshLayout.setOnRefreshListener(this);
         mRefreshLayout.setOnLoadMoreListener(this);
         mRefreshLayout.setRefreshHeader(new BezierCircleHeader(this));
-        mRefreshLayout.setPrimaryColorsId(R.color.colorPrimary,R.color.white);
+        mRefreshLayout.setPrimaryColorsId(R.color.colorPrimary, R.color.white);
 //        if (Build.VERSION.SDK_INT >= 21) {
 //            getWindow().setStatusBarColor(ContextCompat.getColor(this, android.R.color.holo_red_dark));
 //        }
@@ -95,7 +97,7 @@ public class TreeChildrenActivity extends BaseActivity implements OnRefreshListe
     }
 
     public void getTreeArticle(int page) {
-        EasyHttp
+        mDisposable = EasyHttp
                 .get("/article/list/" + page + "/json")
                 .params("cid", String.valueOf(mId))
                 .execute(new CallBackProxy<BaseResult<TreeArticleBean>, TreeArticleBean>(new SimpleCallBack<TreeArticleBean>() {
@@ -121,6 +123,12 @@ public class TreeChildrenActivity extends BaseActivity implements OnRefreshListe
                     }
                 }) {
                 });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EasyHttp.cancelSubscription(mDisposable);
     }
 
     @Override

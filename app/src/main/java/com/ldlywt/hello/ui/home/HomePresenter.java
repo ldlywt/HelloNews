@@ -15,6 +15,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.Disposable;
+
 /**
  * <pre>
  *     author : lex
@@ -26,13 +28,16 @@ import javax.inject.Inject;
  */
 public class HomePresenter extends BasePresenter<HomeContract.View> implements HomeContract.Presenter {
 
+    private Disposable mDisposable1;
+    private Disposable mDisposable2;
+
     @Inject
     public HomePresenter() {
     }
 
     @Override
     public void getArticles(int page) {
-        EasyHttp
+        mDisposable1 = EasyHttp
                 .get("/article/list/" + page + "/json")
                 .execute(new CallBackProxy<BaseResult<ArticleListBean>, ArticleListBean>(new SimpleCallBack<ArticleListBean>() {
                     @Override
@@ -50,7 +55,7 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
 
     @Override
     public void getBanner() {
-        EasyHttp
+        mDisposable2 = EasyHttp
                 .get("/banner/json")
                 .execute(new CallBackProxy<BaseResult<List<BannerBean>>, List<BannerBean>>(new SimpleCallBack<List<BannerBean>>() {
                     @Override
@@ -64,5 +69,12 @@ public class HomePresenter extends BasePresenter<HomeContract.View> implements H
                     }
                 }) {
                 });
+    }
+
+    @Override
+    public void detachView() {
+        super.detachView();
+        EasyHttp.cancelSubscription(mDisposable1);
+        EasyHttp.cancelSubscription(mDisposable2);
     }
 }

@@ -16,6 +16,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.Disposable;
+
 
 /**
  * <pre>
@@ -28,6 +30,9 @@ import javax.inject.Inject;
  */
 public class TreePresenter extends BasePresenter<TreeContract.View> implements TreeContract.Presenter {
 
+    private Disposable mDisposable;
+    private Disposable mDisposable1;
+
     @Inject
     TreePresenter() {
     }
@@ -35,7 +40,7 @@ public class TreePresenter extends BasePresenter<TreeContract.View> implements T
 
     @Override
     public void getTree() {
-        EasyHttp
+        mDisposable = EasyHttp
                 .get("/tree/json")
                 .execute(new CallBackProxy<BaseResult<List<TreeBean>>, List<TreeBean>>(new SimpleCallBack<List<TreeBean>>() {
                     @Override
@@ -53,7 +58,7 @@ public class TreePresenter extends BasePresenter<TreeContract.View> implements T
 
     @Override
     public void getTreeArticle(int id, int page) {
-        EasyHttp
+        mDisposable1 = EasyHttp
                 .get("/article/list/" + page + "/json")
                 .params("cid", String.valueOf(id))
                 .execute(new CallBackProxy<BaseResult<TreeArticleBean>, TreeArticleBean>(new SimpleCallBack<TreeArticleBean>() {
@@ -68,5 +73,12 @@ public class TreePresenter extends BasePresenter<TreeContract.View> implements T
                     }
                 }) {
                 });
+    }
+
+    @Override
+    public void detachView() {
+        super.detachView();
+        EasyHttp.cancelSubscription(mDisposable);
+        EasyHttp.cancelSubscription(mDisposable1);
     }
 }
